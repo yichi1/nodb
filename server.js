@@ -17,7 +17,7 @@ function start(client, route, handle) {
     });
 
     request.addListener("end", function() {
-      route(client, handle, pathname, response, postData, queryString);
+      route(client, handle, pathname, response, queryString);
     });
 
   }

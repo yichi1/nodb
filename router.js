@@ -1,7 +1,7 @@
-function route(client, handle, pathname, response, postData,queryString) {
+function route(client, handle, pathname, response, queryString) {
   console.log("About to route a request for " + pathname);
   if (typeof handle[pathname] === 'function') {
-    handle[pathname](client, response, queryString, postData);
+    handle[pathname](client, response, queryString);
   } else {
     // console.log("No request handler found for " + pathname);
     // response.writeHead(404, {"Content-Type": "text/plain"});

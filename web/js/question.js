@@ -1,13 +1,13 @@
 $(function () {
     "use strict";
     // var lastsel;
-    var _tbl = "question";
+    var scr = "question01";
     $("#list2").jqGrid({
-        url:'/?_act=query&_tbl=' + _tbl,
+        url:'/nodb?action=query&scr=' + scr + "&_datatype=array",
         datatype: "json",
         colNames: ['No', '题目', '选择答案','正确答案', '分类1', '难度', '关键字标签', '创建时间', '更新时间', '操作'], 
         colModel: [ 
-                    { name: 'num', index: 'num', width: 40, align: 'center'},
+                    { name: 'id', index: 'id', width: 40, align: 'center'},
                     { name: 'descr', index: 'descr', width: 110},
                     { name: 'hint', index: 'hint', width: 150}, 
                     { name: 'ans', index: 'ans', width: 35, align: 'center'},
@@ -31,6 +31,7 @@ $(function () {
         multiselect: true,
         cellEdit: true, // TRUE = turns on celledit for the grid.
         cellsubmit: 'clientArray',
+        prmNames: {sort:"sys__sort",order:"sys__order",rows:"sys__rows__page",page:"sys__query__page"},
         // onSelectRow: function(id){
         //     alert("444");
         //     if(id && id!==lastsel){
@@ -45,7 +46,7 @@ $(function () {
         beforeSaveCell: function(rowid,celname,value,iRow,iCol) {
             $.ajax({
                 type: "POST",
-                url:'/?_act=update&_tbl=' + _tbl + '&_flds='+ celname + "&_vals=" + value + "&_id=" + rowid,
+                url:'/nodb?_act=update&_tbl=' + _tbl + '&_flds='+ celname + "&_vals=" + value + "&_id=" + rowid,
                 beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
                 async: false,
                 data:'json',
@@ -66,7 +67,7 @@ $(function () {
             if(confirm("您是否确认删除？")) {
                 $.ajax({ 
                     type: "POST", 
-                    url: "http://192.168.2.45:8888?_act=Delete&_tbl=" + _tbl + "&_ids=" + rowIds, 
+                    url: "nodb/?action=delete&scr=" + scr + "&id=" + rowIds, 
                     beforeSend: function() {
                     }, 
                     error:function(){
