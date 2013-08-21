@@ -1,14 +1,22 @@
 "use strict"
 
+// NODB = {};
+var confPath = './ini/hn03.ini';
+    
 // Load internal modules
 var server = require("./server"),
 	router = require("./router"),
-	requestHandlers = require("./requestHandlers");
+	requestHandlers = require("./requestHandlers"),
+	init = require("./lib/init.js");
 
 // Definite routes
 var handle = {}
 handle["/nodb"] = requestHandlers.start;
 
-// Start server
-server.start(router.route, handle);
-console.log("server.start OK.\n");
+init.nodb(confPath, function(conf){
+
+	global.ini = conf;
+	// Start server
+	server.start(router.route, handle);
+	console.log("server.start OK.\n");
+});

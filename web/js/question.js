@@ -3,7 +3,7 @@ $(function () {
     // var lastsel;
     var scr = "question01";
     $("#list2").jqGrid({
-        url:'/nodb?action=query&scr=' + scr + "&_datatype=array",
+        url:'/nodb?action=ajaxquerylist&scr=' + scr + "&_datatype=array",
         datatype: "json",
         colNames: ['No', '题目', '选择答案','正确答案', '分类1', '难度', '关键字标签', '创建时间', '更新时间', '操作'], 
         colModel: [ 
@@ -67,7 +67,7 @@ $(function () {
             if(confirm("您是否确认删除？")) {
                 $.ajax({ 
                     type: "POST", 
-                    url: "nodb/?action=delete&scr=" + scr + "&id=" + rowIds, 
+                    url: "/nodb?action=delete&scr=" + scr + "&id=" + rowIds, 
                     beforeSend: function() {
                     }, 
                     error:function(){

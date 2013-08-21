@@ -3,10 +3,6 @@ function route(handle, pathname, response, queryString) {
   if (typeof handle[pathname] === 'function') {
     handle[pathname](response, queryString);
   } else {
-    // console.log("No request handler found for " + pathname);
-    // response.writeHead(404, {"Content-Type": "text/plain"});
-    // response.write("404 Not found");
-    // response.end();
     console.log("No request handler found for " + pathname);
     // refer to http://stackoverflow.com/questions/6084360/node-js-as-a-simple-web-server
     // and need to add some cache mechanism for static files here.
