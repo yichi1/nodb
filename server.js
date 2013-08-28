@@ -9,16 +9,23 @@ function start(route, handle) {
     console.log("Request for " + pathname + " received.");
 
     request.setEncoding("utf8");
+    if(request.method == 'POST') {
+      request.addListener("data", function(postDataChunk) {
+        postData += postDataChunk;
+        console.log("Received POST data chunk '"+
+        postDataChunk + "'.");
+      });
+      request.addListener("end", function() {
+        route(handle, pathname, response, postData);
+      });
+    }
 
-    request.addListener("data", function(postDataChunk) {
-      postData += postDataChunk;
-      console.log("Received POST data chunk '"+
-      postDataChunk + "'.");
-    });
-
-    request.addListener("end", function() {
-      route(handle, pathname, response, queryString);
-    });
+    request.setEncoding("utf8");
+    if(request.method == 'GET') {
+      request.addListener("end", function() {
+        route(handle, pathname, response, queryString);
+      });
+    }
 
   }
 

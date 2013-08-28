@@ -12,6 +12,8 @@ var server = require("./server"),
 // Definite routes
 var handle = {}
 handle["/nodb"] = requestHandlers.start;
+handle["/poolno"] = requestHandlers.poolno;
+handle["/poolyes"] = requestHandlers.poolyes;
 
 init.nodb(confPath, function(conf){
 

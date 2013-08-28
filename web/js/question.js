@@ -62,12 +62,18 @@ $(function () {
        
     $("#del_btn").click(function(){
         var rowIds = $("#list2").jqGrid('getGridParam','selarrrow');
-        alert(rowIds)
+        alert(rowIds);
+
         if( rowIds.length != 0 && rowIds != null ) {
             if(confirm("您是否确认删除？")) {
                 $.ajax({ 
                     type: "POST", 
                     url: "/nodb?action=delete&scr=" + scr + "&id=" + rowIds, 
+                    // data: {
+                    //     "action": "delete",
+                    //     "scr":scr,
+                    //     "id": rowIds
+                    // },
                     beforeSend: function() {
                     }, 
                     error:function(){
@@ -90,6 +96,39 @@ $(function () {
             // $("#list2").jqGrid('delGridRow', rowId, {url: "http://192.168.2.45:8888?_act=Delete&_tbl=" + _tbl + "&_id=" + rowId, reloadAfterSubmit:false});
         } else {
             alert("Please Select Row to delete!");
+        }
+    });
+    $("#add_btn").click(function(){
+        if(confirm("您确定要新增吗？")) {
+            $.ajax({ 
+                type: "GET", 
+                url: "/nodb?action=add&scr=" + scr, 
+                data: {
+                    action: "add",
+                    scr:scr,
+                    "question.hint": "60111111111111",
+                    "question.descr":  "成年人每分钟心跳平均约多少次？(test)",
+                    "question.ans": 2,
+                    "question.cat1":6,
+                },
+                beforeSend: function() {
+                }, 
+                error:function(){
+                }, 
+                success: function(data){ 
+                   if(data["msg"]!=0){
+                       var arr = data["msg"].split(','); 
+                       $.each(arr,function(i,n){ 
+                            if(arr[i]!=""){
+                                $("#list2").jqGrid('delRowData',n);  
+                            } 
+                       });
+                        alert("已成功删除!");
+                   }else{
+                        alert("操作失败！");
+                   } 
+                } 
+            });  
         }
     });
 });
