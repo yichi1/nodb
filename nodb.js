@@ -22,3 +22,4 @@ init.nodb(confPath, function(conf){
 	server.start(router.route, handle);
 	console.log("server.start OK.\n");
 });
+
